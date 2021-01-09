@@ -9,15 +9,5 @@
 - The player can choose to 'Hold', which means that his ROUND score gets added to his GLBAL score. After that, it's the next player's turn
 - The first player to reach 100 points on GLOBAL score wins the game
 
+Den update
 
-git clone repo
-
-
-git add .
-git commit -m "Message"
-git push origin branch-name
-
-
-git checkout -b branch-name
-git merge branch-destination     -----> merge into branch
-git push origin branch-name

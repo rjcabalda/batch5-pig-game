@@ -49,16 +49,56 @@ const startGame = () => {
   playerOne.textContent = "Player 1";
   playerTwo.textContent = "Player 2";
 };
-/* rollDice function */
-const rollDice = () => {
+
+function rollDice() {
+  console.log("Rio function");
   randomNum1 = Math.floor(Math.random() * 6) + 1;
   randomNum2 = Math.floor(Math.random() * 6) + 1;
   randomNum = randomNum1 + randomNum2;
   dice1.style.display = "block";
   dice2.style.display = "block";
-  dice1.src = "dice-" + randomNum1 + ".png";
-  dice2.src = "dice-" + randomNum2 + ".png";
-};
+
+  switch (randomNum1) {
+    case 1:
+      dice1.src = "dice-1.png";
+      break;
+    case 2:
+      dice1.src = "dice-2.png";
+      break;
+    case 3:
+      dice1.src = "dice-3.png";
+      break;
+    case 4:
+      dice1.src = "dice-4.png";
+      break;
+    case 5:
+      dice1.src = "dice-5.png";
+      break;
+    case 2:
+      dice1.src = "dice-6.png";
+      break;
+  }
+  switch (randomNum2) {
+    case 1:
+      dice2.src = "dice-1.png";
+      break;
+    case 2:
+      dice2.src = "dice-2.png";
+      break;
+    case 3:
+      dice2.src = "dice-3.png";
+      break;
+    case 4:
+      dice2.src = "dice-4.png";
+      break;
+    case 5:
+      dice2.src = "dice-5.png";
+      break;
+    case 2:
+      dice2.src = "dice-6.png";
+      break;
+  }
+}
 
 /* Taking Turns */
 const changeRoles = () => {
@@ -92,6 +132,8 @@ rollBtn.addEventListener("click", () => {
         ? (currentScore1.textContent = currentScoreSum)
         : (currentScore0.textContent = currentScoreSum);
     }
+  } else {
+    alert('Someone already won.\nPlease click New Game to start.')
   }
 });
 
@@ -114,6 +156,9 @@ holdBtn.addEventListener("click", () => {
       dice2.style.display = "none";
       isGamePlaying = false;
     } else changeRoles();
+  }
+  else {
+    alert('Someone already won.\nPlease click New Game to start.')
   }
 });
 

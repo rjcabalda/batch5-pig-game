@@ -9,34 +9,114 @@ GAME RULES:
 
 */
 
-let btnRoll = document.getElementById('btn-roll');
-let diceImage = document.getElementById('currentDice');
-let randomIndex;
+const tValue = 100; // This is the winning score.
+let randomNum, randomNum1, randomNum2, activePlayer, scores, isGamePlaying;
 
-function rollDice() {
-    randomIndex = Math.floor(Math.random() * 6)
-    switch (randomIndex) {
-        case 0:
-            diceImage.src = 'dice-1.png'
-            break;
-        case 1:
-            diceImage.src = 'dice-2.png'
-            break;
-        case 2:
-            diceImage.src = 'dice-3.png'
-            break;
-        case 3:
-            diceImage.src = 'dice-4.png'
-            break;
-        case 4:
-            diceImage.src = 'dice-5.png'
-            break;
-        case 5:
-            diceImage.src = 'dice-6.png'
-            break;
-    }
-}
+let playerOne = document.querySelector("#name-0");
+let playerTwo = document.querySelector("#name-1");
+let newGameBtn = document.querySelector(".btn-new");
+let rollBtn = document.querySelector(".btn-roll");
+let holdBtn = document.querySelector(".btn-hold");
+let setValueBtn = document.querySelector(".btn-set-value");
+let dice1 = document.querySelector(".die1");
+let dice2 = document.querySelector(".die2");
+let currentScore0 = document.getElementById("current-0");
+let currentScore1 = document.getElementById("current-1");
+let globalScore0 = document.getElementById("score-0");
+let globalScore1 = document.getElementById("score-1");
+let player0Panel = document.querySelector(".player-0-panel");
+let player1Panel = document.querySelector(".player-1-panel");
+let currentScoreSum;
 
-btnRoll.addEventListener('click', () => {
+/*-------------------------------------FUNCTIONS----------------------------------------------------*/
+
+const startGame = () => {
+  dice1.style.display = "none"; // hide both dice
+  dice2.style.display = "none"; // hide both dice
+  isGamePlaying = true;
+  scores = [0, 0];
+  activePlayer = 0;
+  currentScoreSum = 0;
+  currentScore0.textContent = 0;
+  currentScore1.textContent = 0;
+  globalScore0.textContent = 0;
+  globalScore1.textContent = 0;
+  player0Panel.classList.remove("active"); //removes the 'active' word for css selection purposes
+  player1Panel.classList.remove("active");
+  player0Panel.classList.add("active");
+  player0Panel.classList.remove("winner");
+  player1Panel.classList.remove("winner");
+  playerOne.textContent = "Player 1";
+  playerTwo.textContent = "Player 2";
+};
+/* rollDice function */
+const rollDice = () => {
+  randomNum1 = Math.floor(Math.random() * 6) + 1;
+  randomNum2 = Math.floor(Math.random() * 6) + 1;
+  randomNum = randomNum1 + randomNum2;
+  dice1.style.display = "block";
+  dice2.style.display = "block";
+  dice1.src = "dice-" + randomNum1 + ".png";
+  dice2.src = "dice-" + randomNum2 + ".png";
+};
+
+/* Taking Turns */
+const changeRoles = () => {
+  if (activePlayer === 1) {
+    activePlayer = 0;
+    player1Panel.classList.toggle("active");
+    player0Panel.classList.toggle("active");
+    currentScore1.textContent = 0;
+  } else {
+    activePlayer = 1;
+    player0Panel.classList.toggle("active");
+    player1Panel.classList.toggle("active");
+    currentScore0.textContent = 0;
+  }
+  dice1.style.display = "none";
+  dice2.style.display = "none";
+};
+
+startGame();
+
+rollBtn.addEventListener("click", () => {
+  if (isGamePlaying) {
     rollDice();
+    console.log(randomNum1, randomNum2);
+    if (randomNum1 === 1 || randomNum2 === 1) {
+      changeRoles();
+      currentScoreSum = 0;
+    } else {
+      currentScoreSum += randomNum;
+      activePlayer
+        ? (currentScore1.textContent = currentScoreSum)
+        : (currentScore0.textContent = currentScoreSum);
+    }
+  }
+});
+
+holdBtn.addEventListener("click", () => {
+  if (isGamePlaying) {
+    scores[activePlayer] += currentScoreSum;
+    if (activePlayer === 1) globalScore1.textContent = scores[activePlayer];
+    else globalScore0.textContent = scores[activePlayer];
+    currentScoreSum = 0;
+
+    if (scores[activePlayer] >= tValue) {
+      document
+        .querySelector(".player-" + activePlayer + "-panel")
+        .classList.add("winner");
+      document.getElementById("name-" + activePlayer).textContent = "WINNER !";
+      document
+        .querySelector(".player-" + activePlayer + "-panel")
+        .classList.remove("active");
+      dice1.style.display = "none";
+      dice2.style.display = "none";
+      isGamePlaying = false;
+    } else changeRoles();
+  }
+});
+
+newGameBtn.addEventListener("click", () => {
+  startGame();
 });

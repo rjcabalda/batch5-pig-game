@@ -51,7 +51,6 @@ const startGame = () => {
 };
 
 function rollDice() {
-  console.log("Rio function");
   randomNum1 = Math.floor(Math.random() * 6) + 1;
   randomNum2 = Math.floor(Math.random() * 6) + 1;
   randomNum = randomNum1 + randomNum2;
@@ -113,8 +112,8 @@ const changeRoles = () => {
     player1Panel.classList.toggle("active");
     currentScore0.textContent = 0;
   }
-  dice1.style.display = "none";
-  dice2.style.display = "none";
+  // dice1.style.display = "none";
+  // dice2.style.display = "none";
 };
 
 startGame();
@@ -122,7 +121,6 @@ startGame();
 rollBtn.addEventListener("click", () => {
   if (isGamePlaying) {
     rollDice();
-    console.log(randomNum1, randomNum2);
     if (randomNum1 === 1 || randomNum2 === 1) {
       changeRoles();
       currentScoreSum = 0;

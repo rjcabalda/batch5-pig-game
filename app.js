@@ -74,7 +74,7 @@ function rollDice() {
     case 5:
       dice1.src = "dice-5.png";
       break;
-    case 2:
+    case 6:
       dice1.src = "dice-6.png";
       break;
   }
@@ -94,7 +94,7 @@ function rollDice() {
     case 5:
       dice2.src = "dice-5.png";
       break;
-    case 2:
+    case 6:
       dice2.src = "dice-6.png";
       break;
   }
@@ -132,6 +132,7 @@ rollBtn.addEventListener("click", () => {
         ? (currentScore1.textContent = currentScoreSum)
         : (currentScore0.textContent = currentScoreSum);
     }
+
   } else {
     alert('Someone already won.\nPlease click New Game to start.')
   }
